@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Send OTP</title>
+</head>
+<body>
+  <h1>Send OTP</h1>
+  <p>Enter an email address and click Send. The OTP will appear in the server console.</p>
+
+  <label>Email:</label>
+  <input type="email" id="email" placeholder="someone@example.com" />
+  <br /><br />
+  <button onclick="sendOtp()">Send OTP</button>
+  <button onclick="resendOtp()">Resend OTP</button>
+
+  <p id="message"></p>
+
+  <p><a href="/verify.html">Go to Verify OTP screen</a></p>
+
+  <script>
+    // Send a new OTP for the email typed in.
+    function sendOtp() {
+      const email = document.getElementById("email").value;
+      callApi("/send", { email: email });
+    }
+
+    // Resend the OTP for the email typed in.
+    function resendOtp() {
+      const email = document.getElementById("email").value;
+      callApi("/resend", { email: email });
+    }
+
+    // Helper that sends the request and shows the message.
+    function callApi(url, data) {
+      fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      })
+        .then(function (res) { return res.json(); })
+        .then(function (result) {
+          document.getElementById("message").innerText = result.message;
+        })
+        .catch(function () {
+          document.getElementById("message").innerText = "Something went wrong.";
+        });
+    }
+  </script>
+</body>
+</html>
