@@ -1,6 +1,6 @@
 // config.js
 // All the OTP settings live here so they are easy to change.
-// The brief says these should be config variables we can adjust easily.
+// These should be config variables for easy adjust.
 
 module.exports = {
   otpLength: 6,              // OTP is 6 digits
